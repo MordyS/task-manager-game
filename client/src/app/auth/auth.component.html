@@ -1,0 +1,20 @@
+<div class="flex justify-content-around mt-8">
+    <p-card [header]="actionText">
+        <div class="flex flex-column gap-5 pt-4">
+            <span class="p-float-label p-input-icon-right">
+                <i class="pi pi-user"></i>
+                <input pInputText [(ngModel)]="username" (keyup.enter)="submit()"/>
+                <label htmlFor="username">Username</label>
+            </span>
+            <span class="p-float-label">
+                <p-password [(ngModel)]="password" [toggleMask]="true" (keyup.enter)="submit()"></p-password>
+                <label for="password">Password</label>
+            </span>
+            <p-button [label]="actionText" (click)="submit()" [loading]="loading"></p-button>
+            <p-button (click)="isLogin = !isLogin" styleClass="p-button-info p-button-text p-button-sm" 
+                [label]="isLogin ? 'Create a new account' : 'I have an account'"></p-button>
+        </div>
+    </p-card>
+</div>
+
+<p-toast position="bottom-center"></p-toast>

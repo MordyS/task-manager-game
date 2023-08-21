@@ -1,0 +1,8 @@
+.badges div {
+    opacity: .2;
+
+    &.selected {
+        opacity: initial;
+        transform: scale(1.5);
+    }
+}

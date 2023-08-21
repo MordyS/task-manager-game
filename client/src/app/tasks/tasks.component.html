@@ -1,0 +1,44 @@
+<p-menubar>
+    <ng-template pTemplate="start">
+        <p-button (onClick)="goToHome()" styleClass="p-button-text" label="My Profile" icon="pi pi-fw pi-briefcase"></p-button>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <p-button (onClick)="logout()" styleClass="p-button-text" label="Logout" icon="pi pi-fw pi-sign-out"></p-button>
+    </ng-template>
+</p-menubar>
+
+<div class="flex justify-content-around mt-8">
+    <p-card header="Tasks">
+        <ul class="w-25rem list-none flex flex-column gap-2 p-0 m-0">
+            <li *ngFor="let task of tasks$ | async" class="p-2 border-round shadow-1 bg-primary-100 text-primary flex justify-content-between">
+                <span class="font-bold">{{task.name}}</span>
+                <span class="flex gap-2">
+                    <span class="text-white">{{task.score}}</span>
+                    <p-checkbox [ngModel]="isTaskCompleted(task) | async" [binary]="true" (onChange)="toggleTask($event, task)"></p-checkbox>
+                </span>
+            </li>
+        </ul>
+        <div class="pt-5 flex justify-content-center">
+            <p-button label="Add Task" (click)="initTask()"></p-button>
+        </div>
+    </p-card>
+</div>
+
+<p-dialog *ngIf="newTask" header="New Task" [visible]="!!newTask" (visibleChange)="newTask = undefined" [style]="{ width: '50vw' }">
+    <div class="flex flex-column gap-3 pt-2">
+        <span class="p-float-label">
+            <input class="w-full" pInputText [(ngModel)]="newTask.name" />
+            <label htmlFor="username">Task Name</label>
+        </span>
+        <span class="p-float-label">
+            <p-inputNumber styleClass="w-full" class="w-full" [(ngModel)]="newTask.score" [min]="1" [max]="10"> </p-inputNumber>
+            <label htmlFor="number-input">Points (1-10)</label>
+        </span>
+        <p-slider [(ngModel)]="newTask.score" [min]="1" [max]="10" [step]="1" class="w-full"></p-slider>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="saveTask(newTask)" label="Save" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-toast position="bottom-center"></p-toast>

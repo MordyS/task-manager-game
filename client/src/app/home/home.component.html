@@ -1,0 +1,34 @@
+<p-menubar>
+    <ng-template pTemplate="start">
+        <p-button (onClick)="goToTasks()" styleClass="p-button-text" label="Manage Tasks" icon="pi pi-fw pi-briefcase"></p-button>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <p-button (onClick)="logout()" styleClass="p-button-text" label="Logout" icon="pi pi-fw pi-sign-out"></p-button>
+    </ng-template>
+</p-menubar>
+
+<div class="flex justify-content-around mt-8">
+    <p-card [header]="(username$ |async)!" subheader="Level {{level$ | async}}">
+        <div class="badges flex gap-7 px-6 py-2 w-25rem">
+            <div *ngFor="let badge of badges" class="max-w-full text-center flex flex-column gap-1" [class.selected]="(level$ | async) == badge.level">
+                <span class="text-primary text-sm font-bold">{{badge.name}}</span>
+                <img class="w-full" [src]="badge.img">
+            </div>
+        </div>
+        <ul class="w-25rem list-none flex flex-column gap-2 pt-6 m-0">
+            <li *ngFor="let user of users$ | async; let i = index;" [ngClass]="user.isMe ? 'bg-primary-100' : 'bg-black-alpha-10'"
+                class="p-2 border-round shadow-1 text-primary flex justify-content-between">
+                <span class="font-bold flex gap-2 align-items-center">
+                    <p-badge value="{{ i + 1 }}"></p-badge>
+                    {{ user.username }}
+                </span>
+                <span class="flex gap-2">
+                    <span>
+                        <span class="text-sm text-white">Score: </span>
+                        {{user.score}}
+                    </span>
+                </span>
+            </li>
+        </ul>
+    </p-card>
+</div>
